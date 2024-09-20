@@ -5,7 +5,7 @@
     "title": "Major cat 4/5 cyclones in Australia (2006 - 2015)",
     "autosize":"fit",
     "data": {
-          "url": "https://raw.githubusercontent.com/MKY43/3179/refs/heads/main/map_data/cyclone_map_data.csv"},
+          "url": "https://raw.githubusercontent.com/MKY43/3179/refs/heads/main/cyclone_map/map_data/cyclone_map_data.csv"},
     "projection": {"type": "mercator"},
     "params": [
       
