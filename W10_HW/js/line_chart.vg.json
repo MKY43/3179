@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": 600,
-  "height": 300,
+  "height": 400,
   "data": {
     "url": "https://raw.githubusercontent.com/MKY43/3179/refs/heads/main/W10_HW/map_data/line_chart.csv"
   },
@@ -21,34 +21,28 @@
     {
       "filter": "cyclone_selection == null || datum.Cyc_Name == cyclone_selection"
     },
-    {
-      "calculate": "toDate(datum.Time)",
-      "as": "Time_Parsed"
-    }
+    {"calculate": "toDate(datum.Time)", "as": "Time_Parsed"}
   ],
   "layer": [
     {
-      "mark": {
-        "type": "bar",
-        "size": 10  
-      },
+      "mark": {"type": "bar", "size": 10},
       "encoding": {
         "x": {
           "field": "Time_Parsed",
           "type": "temporal",
-          "axis": {"title": "Date"}
+          "axis": {
+            "title": "Date",
+            "format": "%d-%m-%y %H:%M", 
+            "labelAngle": 90 
+          }
         },
         "y": {
           "field": "Wind_Speed",
           "type": "nominal",
           "axis": {"title": "Wind Speed (m/s)", "orient": "left"},
-          "scale": {
-            "domain": [">32 m/s", "25-32 m/s", "17-24 m/s", "<17 m/s"]
-          }
+          "scale": {"domain": [">32 m/s", "25-32 m/s", "17-24 m/s", "<17 m/s"]}
         },
-        "y2": {
-          "value": 300 
-        },
+        "y2": {"value": 400},
         "color": {
           "field": "Wind_Speed",
           "type": "nominal",
@@ -66,26 +60,21 @@
         "x": {
           "field": "Time_Parsed",
           "type": "temporal",
-          "axis": {"title": null}
+          "axis": {
+            "title": null,
+            "format": "%d-%m-%y %H:%M",
+            "labelAngle": 90 
+          }
         },
         "y": {
           "field": "Central_Pressure",
           "type": "quantitative",
-          "axis": {
-            "title": "Central Pressure (hPa)",
-            "orient": "right"
-          },
+          "axis": {"title": "Central Pressure (hPa)", "orient": "right"},
           "scale": {"domain": [900, 1100]}
         },
-        "color": {
-          "value": "#d62728"
-        }
+        "color": {"value": "#d62728"}
       }
     }
   ],
-  "resolve": {
-    "scale": {
-      "y": "independent"
-    }
-  }
+  "resolve": {"scale": {"y": "independent"}}
 }
