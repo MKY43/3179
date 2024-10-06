@@ -1,46 +1,91 @@
 {
-    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "width": 600,
-    "height": 300,
-    "data": {
-      "url": "https://raw.githubusercontent.com/MKY43/3179/refs/heads/main/W10%20Hw/map_data/line_chart.csv"
-    },
-    "transform": [
-      {"filter": {"selection": "cycNameSelector"}},
-      {
-        "calculate": "toDate(datum.Time, '%d/%m/%Y %H:%M')",
-        "as": "Time_Parsed"
-      }
-    ],
-    "selection": {
-      "cycNameSelector": {
-        "type": "single",
-        "fields": ["Cyc_Name"],
-        "bind": {"input": "select", "options": ["Marcia", "Yasi", "Larry", "George", "Ingrid", "Monica"], "name": "Cyclone: "},
-        "init": {"Cyc_Name": "Marcia"} 
-      }
-    },
-    "mark": "line",
-    "encoding": {
-      "x": {
-        "field": "Time_Parsed",
-        "type": "temporal",
-        "axis": {
-          "title": "Date",
-          "format": "%Y-%m-%d"
-        },
-        "scale": {"domain": {"selection": "cycNameSelector", "field": "Time_Parsed"}}
-      },
-      "y": {
-        "field": "Central_Pressure",
-        "type": "quantitative",
-        "axis": {"title": "Central Pressure"},
-        "scale": {"domain": [900, 1100]}  
-      },
-      "color": {
-        "field": "Cyc_Name",
-        "type": "nominal",
-        "legend": {"title": "Cyclone"}
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 600,
+  "height": 300,
+  "data": {
+    "url": "https://raw.githubusercontent.com/MKY43/3179/refs/heads/main/W10%20Hw/map_data/line_chart.csv"
+  },
+  "params": [
+    {
+      "name": "cyclone_selection",
+      "value": "Marcia",
+      "bind": {
+        "input": "select",
+        "options": ["Marcia", "Yasi", "Larry", "George", "Ingrid", "Monica"],
+        "labels": ["Marcia", "Yasi", "Larry", "George", "Ingrid", "Monica"],
+        "name": "Select Cyclone: "
       }
     }
+  ],
+  "transform": [
+    {
+      "filter": "cyclone_selection == null || datum.Cyc_Name == cyclone_selection"
+    },
+    {
+      "calculate": "toDate(datum.Time, '%d/%m/%Y %H:%M')",
+      "as": "Time_Parsed"
+    }
+  ],
+  "layer": [
+    {
+      "mark": {
+        "type": "bar",
+        "size": 10  
+      },
+      "encoding": {
+        "x": {
+          "field": "Time_Parsed",
+          "type": "temporal",
+          "axis": {"title": "Date"}
+        },
+        "y": {
+          "field": "Wind_Speed",
+          "type": "nominal",
+          "axis": {"title": "Wind Speed (m/s)", "orient": "left"},
+          "scale": {
+            "domain": [">32 m/s", "25-32 m/s", "17-24 m/s", "<17 m/s"]
+          }
+        },
+        "y2": {
+          "value": 300 
+        },
+        "color": {
+          "field": "Wind_Speed",
+          "type": "nominal",
+          "scale": {
+            "domain": ["<17 m/s", "17-24 m/s", "25-32 m/s", ">32 m/s"],
+            "range": ["#1f77b4", "#A020F0", "#ff7f0e", "#2ca02c"]
+          },
+          "legend": {"title": "Wind Speed (m/s)"}
+        }
+      }
+    },
+    {
+      "mark": "line",
+      "encoding": {
+        "x": {
+          "field": "Time_Parsed",
+          "type": "temporal",
+          "axis": {"title": null}
+        },
+        "y": {
+          "field": "Central_Pressure",
+          "type": "quantitative",
+          "axis": {
+            "title": "Central Pressure (hPa)",
+            "orient": "right"
+          },
+          "scale": {"domain": [900, 1100]}
+        },
+        "color": {
+          "value": "#d62728"
+        }
+      }
+    }
+  ],
+  "resolve": {
+    "scale": {
+      "y": "independent"
+    }
   }
+}
