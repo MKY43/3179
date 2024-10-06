@@ -22,7 +22,7 @@
       "filter": "cyclone_selection == null || datum.Cyc_Name == cyclone_selection"
     },
     {
-      "calculate": "toDate(datum.Time, '%d/%m/%Y %H:%M')",
+      "calculate": "toDate(datum.Time)",
       "as": "Time_Parsed"
     }
   ],
