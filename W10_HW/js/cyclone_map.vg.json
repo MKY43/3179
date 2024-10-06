@@ -2,7 +2,7 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": 900,
   "height": 500,
-  "title": "Major cat 4/5 cyclones in Australia (2006 - 2015)",
+  "title": "Major Cat 4/5 Cyclones in Australia (2006 - 2015)",
   "autosize": "fit",
   "data": {
     "url": "https://raw.githubusercontent.com/MKY43/3179/refs/heads/main/W10_HW/map_data/cyclone_map_data.csv"
@@ -38,6 +38,20 @@
   "transform": [
     {
       "filter": "cyclone_selection == null || datum.Cyc_Name == cyclone_selection"
+    },
+    {
+      "calculate": "toNumber(datum.Radius)",  
+      "as": "Numeric_Radius"
+    },
+    {
+      "joinaggregate": [
+        {
+          "op": "max",
+          "field": "Numeric_Radius",
+          "as": "max_radius"
+        }
+      ],
+      "groupby": ["Cyc_Name"]
     }
   ],
   "layer": [
@@ -61,7 +75,7 @@
         "longitude": {"field": "LON", "type": "quantitative"},
         "latitude": {"field": "LAT", "type": "quantitative"},
         "size": {
-          "field": "Radius",
+          "field": "Numeric_Radius",
           "type": "quantitative",
           "title": "Cyclone Radius (km)",
           "scale": {"domain": [50, 500]}
@@ -81,13 +95,38 @@
           {"field": "Wind_Speed", "type": "ordinal", "title": "Wind Speed"},
           {"field": "LAT", "type": "quantitative", "title": "Latitude"},
           {"field": "LON", "type": "quantitative", "title": "Longitude"},
-          {"field": "Radius", "type": "quantitative", "title": "Radius (km)"},
-          {
-            "field": "Central_Pressure",
-            "type": "quantitative",
-            "title": "Central Pressure (hPa)"
-          }
+          {"field": "Numeric_Radius", "type": "quantitative", "title": "Radius (km)"},
+          {"field": "Central_Pressure", "type": "quantitative", "title": "Central Pressure (hPa)"}
         ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "cyclone_selection != null && datum.Numeric_Radius == datum.max_radius"
+        },
+        {
+          "calculate": "'The largest recorded: radius of ' + datum.Cyc_Name + ' is: ' + datum.max_radius + ' km'",
+          "as": "text_annotation"
+        },
+        {
+        "calculate": "split(datum.text_annotation,':')",
+        "as": "text_split_annotation"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "center",
+        "baseline": "middle",
+        "dx": 0,
+        "dy": 65,
+        "fontSize": 12, 
+        "color": "blue"
+      },
+      "encoding": {
+        "longitude": {"field": "LON", "type": "quantitative"},
+        "latitude": {"field": "LAT", "type": "quantitative"},
+        "text": {"field": "text_split_annotation", "type": "nominal"}
       }
     }
   ]
