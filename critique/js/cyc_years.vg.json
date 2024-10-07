@@ -1,0 +1,26 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "Number of Cyclones in Australia (1970-2024)",
+    "width": 500,
+    "height": 500,
+    "data": {
+      "url": "https://raw.githubusercontent.com/MKY43/3179/refs/heads/main/critique/map_data/cyc_years.csv"
+    },
+    "mark": "line",
+    "encoding": {
+      "x": {
+        "field": "Years",
+        "type": "quantitative",
+        "title": "Year",
+        "axis": {
+          "format": "d"  
+        }
+      },
+      "y": {
+        "field": "Cyc_count",
+        "type": "quantitative",
+        "title": "Number of Cyclones"
+      }
+    }
+  }
+  

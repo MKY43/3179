@@ -1,0 +1,70 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": 800,
+    "height": 600,
+    "title": "Damages and Affected People per Cyclone",
+    "data": {
+      "url": "https://raw.githubusercontent.com/MKY43/3179/refs/heads/main/critique/map_data/bubble_chart.csv"
+    },
+    "params": [
+      {
+        "name": "Cyclone_selection",
+        "bind": {
+          "input": "select",
+          "options": [null, "Marcia", "Yasi", "Larry", "George", "Ingrid", "Monica"],
+          "labels": ["Show All", "Marcia", "Yasi", "Larry", "George", "Ingrid", "Monica"],
+          "name": "Cyclone Selection: "
+        }
+      }
+    ],
+    "transform": [
+      {
+        "filter": "Cyclone_selection == null || datum.Cyc_Name == Cyclone_selection"
+      }
+    ],
+    "encoding": {
+      "x": {
+        "field": "Affected_People",
+        "type": "quantitative",
+        "title": "Affected People",
+        "axis": {"tickCount": 5},
+        "scale": {
+          "type": "linear",
+          "domain": [0, 450000]
+        }
+      },
+      "y": {
+        "field": "Damages",
+        "type": "quantitative",
+        "title": "Damages (in AUD)",
+        "axis": {"tickCount": 5},
+        "scale": {
+          "type": "linear",
+          "domain": [0, 4000000000]
+        }
+      },
+      "size": {
+        "field": "Fatalities",
+        "type": "quantitative",
+        "title": "Fatalities",
+        "scale": {"domain": [0, 5], "range": [100, 1000]}
+      },
+      "color": {
+        "field": "Cyc_Name",
+        "type": "nominal",
+        "title": "Cyclone Name",
+        "scale": {
+          "domain": ["Marcia", "Yasi", "Larry", "George", "Ingrid", "Monica"],
+          "range": ["#e41a1c", "#377eb8", "#4daf4a", "#984ea3", "#ff7f00", "#ffff33"]
+        }
+      },
+      "tooltip": [
+        {"field": "Cyc_Name", "type": "nominal", "title": "Cyclone"},
+        {"field": "Damages", "type": "quantitative", "format": "$,", "title": "Damages (AUD)"},
+        {"field": "Affected_People", "type": "quantitative", "format": ",", "title": "Affected People"},
+        {"field": "Fatalities", "type": "quantitative", "title": "Fatalities"}
+      ]
+    },
+    "mark": "circle"
+  }
+  
