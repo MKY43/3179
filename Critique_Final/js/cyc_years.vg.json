@@ -1,0 +1,40 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Number of Cyclones in Australia (1970-2024)",
+  "data": {
+    "url": "https://raw.githubusercontent.com/MKY43/3179/refs/heads/main/critique/map_data/cyc_years.csv"
+  },
+  "vconcat": [
+    {
+      "width": 900,
+      "height": 400,
+      "mark": "line",
+      "encoding": {
+        "x": {
+          "field": "Years",
+          "type": "temporal",
+          "scale": {"domain": {"param": "brush"}},
+          "axis": {"title": "Years", "tickCount": 10}
+        },
+        "y": {"field": "Cyc_count", "type": "quantitative", "axis": {"title": "Number of Cyclones"}}
+      }
+    },
+    {
+      "width": 900,
+      "height": 50,
+      "mark": "line",
+      "params": [
+        {"name": "brush", "select": {"type": "interval", "encodings": ["x"]}}
+      ],
+      "encoding": {
+        "x": {"field": "Years", "type": "temporal", "axis": {"tickCount": 10}},
+        "y": {
+          "field": "Cyc_count",
+          "type": "quantitative",
+          "axis": {"tickCount": 3, "grid": false},
+          "title": "Frequency"
+        }
+      }
+    }
+  ]
+} 

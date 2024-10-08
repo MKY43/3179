@@ -1,0 +1,84 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": 550,
+    "height": 200,
+    "data": {
+      "url": "https://raw.githubusercontent.com/MKY43/3179/refs/heads/main/critique/map_data/line_chart.csv"
+    },
+    "transform": [
+      {
+        "aggregate": [
+          {
+            "op": "count",
+            "as": "Count"
+          }
+        ],
+        "groupby": ["Cyc_Name", "Wind_Speed"]
+      },
+      {
+        "joinaggregate": [
+          {
+            "op": "sum",
+            "field": "Count",
+            "as": "TotalCount"
+          }
+        ],
+        "groupby": ["Cyc_Name"]
+      },
+      {
+        "calculate": "datum.Count / datum.TotalCount",
+        "as": "Percentage"
+      }
+    ],
+    "mark": "bar",
+    "encoding": {
+      "x": {
+        "field": "Cyc_Name",
+        "type": "ordinal",
+        "title": "Cyclone"
+      },
+      "y": {
+        "field": "Percentage",
+        "type": "quantitative",
+        "title": "Percentage of Total Occurrences",
+        "axis": {
+          "format": "%"
+        },
+        "scale": {
+          "domain": [0, 1]
+        }
+      },
+      "color": {
+        "field": "Wind_Speed",
+        "type": "ordinal",
+        "scale": {
+          "domain": ["<17 m/s", "17-24 m/s", "25-32 m/s", ">32 m/s"],
+          "range": ["#1f77b4", "#A020F0", "#ff7f0e", "#2ca02c"]
+        },
+        "title": "Wind Speed Category",
+        "legend": null
+      },
+      "tooltip": [
+        {
+          "field": "Cyc_Name",
+          "title": "Cyclone Name"
+        },
+        {
+          "field": "Percentage",
+          "title": "Percentage",
+          "type": "quantitative",
+          "format": ".2%"
+        },
+        {
+          "field": "Wind_Speed",
+          "title": "Wind Speed Category"
+        }
+      ]
+    },
+    "config": {
+      "bar": {
+        "tooltip": true
+      }
+    }
+  }
+  
