@@ -10,7 +10,7 @@
     "x": {
       "field": "log_people",
       "type": "quantitative",
-      "title": "Lof of Affected People",
+      "title": "Log of Affected People",
       "axis": {"tickCount": 5},
       "scale": {"type": "linear", "domain": [0, 6]}
     },
