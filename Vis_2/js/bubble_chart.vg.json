@@ -1,0 +1,64 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 600,
+  "height": 400,
+  "title": "Damages and Affected People per Cyclone", 
+  "data": {
+    "url": "https://raw.githubusercontent.com/MKY43/3179/refs/heads/main/Critique_Final/map_data/bubble_chart.csv"
+  },
+  "encoding": {
+    "x": {
+      "field": "log_people",
+      "type": "quantitative",
+      "title": "Lof of Affected People",
+      "axis": {"tickCount": 5},
+      "scale": {"type": "linear", "domain": [0, 6]}
+    },
+    "y": {
+      "field": "log_damage",
+      "type": "quantitative",
+      "title": "Log of Damages (AUD)",
+      "axis": {"tickCount": 5},
+      "scale": {"type": "linear", "domain": [0, 10]}
+    },
+    "size": {
+      "field": "Fatalities",
+      "type": "quantitative",
+      "title": "Fatalities",
+      "scale": {"domain": [0, 5], "range": [100, 1000]}
+    },
+    "color": {
+      "field": "Cyc_Name",
+      "type": "nominal",
+      "title": "Cyclone Name",
+      "scale": {
+        "domain": ["Marcia", "Yasi", "Larry", "George", "Ingrid", "Monica"],
+        "range": [
+          "#e41a1c",
+          "#377eb8",
+          "#4daf4a",
+          "#984ea3",
+          "#ff7f00",
+          "#000000"
+        ]
+      }
+    },
+    "tooltip": [
+      {"field": "Cyc_Name", "type": "nominal", "title": "Cyclone"},
+      {
+        "field": "Damages",
+        "type": "quantitative",
+        "format": "$,",
+        "title": "Damages (AUD)"
+      },
+      {
+        "field": "Affected_People",
+        "type": "quantitative",
+        "format": ",",
+        "title": "Affected People"
+      },
+      {"field": "Fatalities", "type": "quantitative", "title": "Fatalities"}
+    ]
+  },
+  "mark": "circle"
+}

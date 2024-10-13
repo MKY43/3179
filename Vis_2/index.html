@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Import Vega & Vega-Lite (does not have to be from CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
+  
+  <!-- CSS file -->
+  <link rel="stylesheet" type="text/css" href="css/style.css" media="all">
+  
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <div class="title">
+        <h1>Australia's</h1>
+        <h1>Major</h1>
+        <h1>Cyclones</h1>
+      </div>
+      <div class="intro">
+        <p>Explore the impact of major</p>
+        <p>Category 4 and 5 cyclones that have</p>
+        <p>affected Australia from 2006 to 2015</p>
+      </div>
+    </div>
+  </header>
+<main>
+
+
+<section class="section-lightbrown">
+  <h2>Recent Major Cyclones</h2>
+  <div class="visualization">
+    <div id="cyc_map"></div>
+  </div>
+  <div class="paragraph-container">
+    <div>
+      <p>Major Category 4/5 cyclones (2006-2015) frequently struck <span style="color: red; font-weight: bold;">northern Australia</span> , influenced by the region's tropical conditions.</p>
+    </div>
+    <div>
+      <p>These intense cyclones often form in warm tropical waters, highlighting the vulnerability of <span style="color: red; font-weight: bold;">northern coastal regions.</span></p>
+    </div>
+    <div>
+      <p>The most destructive cyclone was <span style="color: red; font-weight: bold;">Yasi</span> with a radius of <span style="color: red; font-weight: bold;">500km</span>, roughly the distance from Melbourne to Canberra </p>
+    </div>
+  </div>
+
+</section>
+
+<section class="section-lightbrown">
+  <h3>Cyclone Dynamics</h3>
+  <div style="display: flex; justify-content: space-between; align-items: center;">
+      <div style="flex: 1; text-align: left; margin-right: 15px;">
+          <p style="margin-bottom: 150px;">It can be observed that lower <span style="color: red; font-weight: bold;">central pressure</span> often leads to higher <span style="color: green; font-weight: bold;">wind speeds</span>, illustrating the intensity changes across cyclone timelines</p>
+          <p>Cyclone wind speeds vary significantly, with <span style="color: purple; font-weight: bold;">17-24 m/s</span> being the least frequent range across all events.</p>
+      </div>
+      <div class = visualization style="flex: 1;">
+          <div id="line_chart"></div>
+          <div id="stacked_bar_chart"></div>
+      </div>
+  </div>
+
+</section>
+
+<section class="section-lightbrown">
+  <h4>Impact Of Cyclones</h4>
+  <div style="display: flex; justify-content: space-between; align-items: center;">
+      <div class= "visualization" style="flex: 1;">
+          <div id="bubble_chart"></div>
+      </div>
+      <div style="flex: 1; text-align: right; margin-left: 15px;">
+        <p style="margin-bottom: 100px;">Cyclone <span style="color: blue; font-weight: bold;">Yasi</span> caused the most damage and affected the most people, yet had only one recorded fatality</p>
+        <p>Despite their smaller impact, Cyclones <span style="color: purple; font-weight: bold;">George</span> and <span style="color: darkgoldenrod; font-weight: bold;">Ingrid</span> had the highest fatality count, with five deaths each</p>
+    </div>
+  </div>
+</section>
+
+<section class="section-lightbrown">
+  <h2>Cyclones Over The Years</h2>
+<div class= "visualization">
+<div id="cyc_year"></div>
+</div>
+<div class="paragraph-container">
+  <div><p>Cyclone occurrences from 1970 to 2024 show a slight downward trend, with most being <span style="color: blue; font-weight: bold;">non-severe</span> (< Category 4)</p>
+  </div>
+<div><p><span style="color: red; font-weight: bold;">Severe</span> cyclones (Category 4+) remain less frequent than <span style="color: blue; font-weight: bold;">non-severe</span> as annual cyclone counts gradually decrease</p>
+</div>
+</div>
+</section>
+<script type="text/javascript">
+    // Embed the cyclone map visualization
+    var vg_1 = "js/cyclone_map.vg.json";
+    vegaEmbed("#cyc_map", vg_1).then(function(result) {
+      // Access the Vega view instance as result.view
+    }).catch(console.error);
+
+    // Embed the line chart visualization
+    var vg_2 = "js/line_chart.vg.json";
+    vegaEmbed("#line_chart", vg_2).then(function(result) {
+      // Access the Vega view instance as result.view
+    }).catch(console.error);
+
+    var vg_3 = "js/bubble_chart.vg.json";
+    vegaEmbed("#bubble_chart", vg_3).then(function(result) {
+      // Access the Vega view instance as result.view
+    }).catch(console.error);
+
+    var vg_4 = "js/stacked_bar.vg.json";
+    vegaEmbed("#stacked_bar_chart", vg_4).then(function(result) {
+      // Access the Vega view instance as result.view
+    }).catch(console.error);
+
+    var vg_5 = "js/cyc_years.vg.json";
+    vegaEmbed("#cyc_year", vg_5).then(function(result) {
+      // Access the Vega view instance as result.view
+    }).catch(console.error);
+</script>
+</body>
+<footer>
+  <div>Author: Matthew Kai Yit</div>
+  <div>Date: 13/20/2024</div>
+  <div>Data sources:http://www.bom.gov.au/cyclone/tropical-cyclone-knowledge-centre/databases/ | http://www.bom.gov.au/cyclone/tropical-cyclone-knowledge-centre/history/climatology/</div>
+</footer>
+</html>
